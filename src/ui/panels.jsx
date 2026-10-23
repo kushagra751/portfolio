@@ -280,10 +280,10 @@ export function ContactPanel() {
         <button className="btn btn-primary" type="submit" disabled={status === 'sending'}>
           {status === 'sending' ? 'Sending...' : 'Send message'}
         </button>
-        {status === 'sent' && <p className="form-note ok">Message sent. Thank you, I will get back to you soon.</p>}
-        {status === 'mailto' && <p className="form-note ok">Your email app should open with the message ready to send.</p>}
+        {status === 'sent' && <p className="form-note ok" role="status">Message sent. Thank you, I will get back to you soon.</p>}
+        {status === 'mailto' && <p className="form-note ok" role="status">Your email app should open with the message ready to send.</p>}
         {status === 'error' && (
-          <p className="form-note bad">
+          <p className="form-note bad" role="alert">
             Could not send right now. Please email me directly at <a href={`mailto:${profile.email}`}>{profile.email}</a>.
           </p>
         )}

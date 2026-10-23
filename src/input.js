@@ -25,6 +25,13 @@ function isTyping(target) {
   return tag === 'INPUT' || tag === 'TEXTAREA' || target.isContentEditable
 }
 
+// Enter/Space on a focused button or link must activate it, not trigger the game's "interact" key.
+function isActivatable(target) {
+  if (!target) return false
+  const tag = target.tagName
+  return tag === 'BUTTON' || tag === 'A' || tag === 'SELECT'
+}
+
 export function setupInput() {
   const down = (e) => {
     const store = useStore.getState()
@@ -43,6 +50,7 @@ export function setupInput() {
       return
     }
     if (e.repeat) return
+    if (e.code === 'Enter' && isActivatable(e.target)) return
     if (e.code === 'KeyE' || e.code === 'Enter') store.interact()
     else if (e.code === 'KeyM') store.toggleMute()
     else if (e.code === 'KeyT') store.toggleTravel()

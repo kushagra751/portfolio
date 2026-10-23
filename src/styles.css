@@ -944,7 +944,20 @@ a {
   *::before,
   *::after {
     transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
+}
+
+/* Visible keyboard focus for buttons and links */
+.btn:focus-visible,
+.hud-btn:focus-visible,
+.panel-close:focus-visible,
+.panel-body a:focus-visible,
+.fallback a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--accent, #8a7bff);
 }
 
 /* ------------------------------------------------- no-WebGL fallback page */

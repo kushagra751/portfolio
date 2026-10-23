@@ -18,6 +18,20 @@ export default function Panel() {
   const backdrop = useRef()
   const card = useRef()
   const body = useRef()
+  const closeBtn = useRef()
+  const lastFocus = useRef(null)
+
+  // Accessibility: move focus into the dialog on open and restore it on close.
+  useEffect(() => {
+    if (panel) {
+      if (!lastFocus.current) lastFocus.current = document.activeElement
+      closeBtn.current?.focus({ preventScroll: true })
+    } else if (lastFocus.current) {
+      const el = lastFocus.current
+      lastFocus.current = null
+      if (el && el.isConnected && typeof el.focus === 'function') el.focus({ preventScroll: true })
+    }
+  }, [panel, current])
 
   useEffect(() => {
     if (panel) {
@@ -55,7 +69,7 @@ export default function Panel() {
             <p className="panel-kicker">{zone.sub}</p>
             <h2 className="panel-title">{title}</h2>
           </div>
-          <button className="panel-close" onClick={() => useStore.getState().closePanel()} aria-label="Close (Esc)">
+          <button className="panel-close" ref={closeBtn} onClick={() => useStore.getState().closePanel()} aria-label="Close (Esc)">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
               <path d="M6 6l12 12M18 6L6 18" />
             </svg>
